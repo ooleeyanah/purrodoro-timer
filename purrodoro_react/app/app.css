@@ -1,15 +1,61 @@
-@import "tailwindcss";
+:root {
+  --box-bg: rgba(255, 255, 255, 0.4);
+  --box-outline: #fff;
+  --white: #fff;
+  --cream: #fff4e6;
+  --lighterPink: #f8b9c8;
+  --lightPink: #fbc2c8;
+  --darkPink: #fb8fa9;
+  --darkestPink: #a01334;
+  --darkRed: #630401;
+  --lightPurple: #e5afe9;
+  --purple: #986b9b;
+  --brightDarkPurple: #712676;
+  --lighterBrown: #f4caa3;
+  --lightBrown: #be9b7b;
+  --redBrown: #854442;
+  --darkBrown: #4d2d1e;
+  --darkestBrown: #3c2f2f;
+}
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
-body {
-  @apply bg-white dark:bg-gray-950;
+body,
+#root {
+  height: 100%;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+body {
+  background-color: var(--lightPink);
+  font-family: Arial, sans-serif;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100%;
+}
+
+#box {
+  background: rgba(255, 255, 255, 0.29);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 350px;
+  padding: 55px 25px 25px;
+  position: relative;
+  width: 100%;
+  -webkit-backdrop-filter: blur(7.7px);
+  backdrop-filter: blur(7.7px);
+}
+
+div #progress {
+  background-color: var(--darkestPink);
 }
