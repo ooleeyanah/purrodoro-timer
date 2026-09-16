@@ -2,6 +2,23 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    --box-bg: rgba(255, 255, 255, 0.40);
+    --box-outline: #fff;
+    --white: #fff;
+    --cream: #FFF4E6;
+    --lighterPink: #F8B9C8;
+    --lightPink: #FBC2C8;
+    --darkPink: #FB8FA9;
+    --darkestPink: #A01334;
+    --darkRed: #630401;
+    --lightPurple: #E5AFE9;
+    --purple: #986B9B;
+    --brightDarkPurple: #712676;
+    --lighterBrown: #F4CAA3;
+    --lightBrown: #BE9B7B;
+    --redBrown: #854442;
+    --darkBrown: #4D2D1E;
+    --darkestBrown: #3C2F2F;
 }
 
 html,
