@@ -27,13 +27,6 @@ body {
     font-family: uniform;
 }
 
-.wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
 
 body {
     font-family: Arial, sans-serif;
@@ -41,17 +34,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-}
-
-#bg_img {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-image: url(./assets/img/dmgbg.png);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    transition: all 0.6s ease-in-out;
+    background-color: var(--lightPink);
 }
 
 #box {
@@ -66,4 +49,8 @@ body {
     backdrop-filter: blur(7.7px);
     -webkit-backdrop-filter: blur(7.7px);
     border: 1px solid rgba(255, 255, 255, 0.64);
+}
+
+div #progress {
+    background-color: var(--darkestPink);
 }
