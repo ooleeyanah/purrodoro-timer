@@ -1,4 +1,5 @@
 import type { Route } from "./+types/home";
+import { useNavigate } from "react-router";
 import { useTimer } from "../timer-context";
 
 export function meta({ }: Route.MetaArgs) {
@@ -8,32 +9,39 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-function formatTime(totalSeconds: number) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-}
-
 export default function Home() {
-  const { isRunning, pause, remainingSeconds, reset, start } = useTimer();
+  const { durations, setDurations } = useTimer();
+  const navigate = useNavigate();
+  const isStandardPreset = durations.focus === 25 * 60 && durations.shortBreak === 5 * 60;
+  const isExtendedPreset = durations.focus === 50 * 60 && durations.shortBreak === 10 * 60;
+
+  function choosePreset(focus: number, shortBreak: number) {
+    setDurations({ focus, shortBreak });
+    navigate("/character");
+  }
 
   return (
-    <main>
-      <div id="bg_img" aria-hidden="true" />
-      <section id="box" aria-labelledby="timer-heading">
-        <div id="overlay">
-          <h1 id="timer-heading">Time Remaining:</h1>
-        </div>
-        <div id="progress" aria-live="polite">
-          <p>{formatTime(remainingSeconds)}</p>
-        </div>
-        <div id="functions">
-          <button id="reset" type="button" onClick={reset}>
-            Reset
+    <main className="timer-menu">
+      <section className="timer-menu__panel" aria-labelledby="timer-menu-heading">
+        <h1 id="timer-menu-heading">Choose your timer:</h1>
+        <div className="timer-menu__choices" aria-label="Timer presets">
+          <button
+            className="timer-preset timer-preset--standard"
+            type="button"
+            aria-pressed={isStandardPreset}
+            onClick={() => choosePreset(25 * 60, 5 * 60)}
+          >
+            <span>25 minute work</span>
+            <span>5 minute break</span>
           </button>
-          <button id="pause" type="button" onClick={isRunning ? pause : start}>
-            {isRunning ? "Pause" : "Start"}
+          <button
+            className="timer-preset timer-preset--extended"
+            type="button"
+            aria-pressed={isExtendedPreset}
+            onClick={() => choosePreset(50 * 60, 10 * 60)}
+          >
+            <span>50 minute work</span>
+            <span>10 minute break</span>
           </button>
         </div>
       </section>

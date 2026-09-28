@@ -4,6 +4,19 @@ export type TimerPhase = "focus" | "shortBreak" | "longBreak";
 
 export type TimerDurations = Record<TimerPhase, number>;
 
+export const characters = [
+    { name: "White cat", src: "/purrodoro_cat_white_gif.gif" },
+    { name: "Black cat", src: "/purrodoro_cat_black_gif.gif" },
+    { name: "Grey cat", src: "/purrodoro_cat_grey_gif.gif" },
+    { name: "Grey tabby cat", src: "/purrodoro_cat_greytabby_gif.gif" },
+    { name: "Orange tabby cat", src: "/purrodoro_cat_orange_gif.gif" },
+    { name: "Brown tabby cat", src: "/purrodoro_cat_browntabby_gif.gif" },
+    { name: "Calico cat", src: "/purrodoro_cat_calico_gif.gif" },
+    { name: "Tortoiseshell cat", src: "/purrodoro_cat_tortoiseshell_gif.gif" },
+    { name: "Panda", src: "/purrodoro_panda_gif.gif" },
+
+];
+
 export const DEFAULT_DURATIONS: TimerDurations = {
     focus: 25 * 60,
     shortBreak: 5 * 60,
@@ -11,6 +24,7 @@ export const DEFAULT_DURATIONS: TimerDurations = {
 };
 
 type TimerState = {
+    characterIndex: number;
     completedFocusSessions: number;
     durations: TimerDurations;
     isRunning: boolean;
@@ -22,6 +36,8 @@ type TimerAction =
     | { type: "pause" }
     | { type: "reset" }
     | { type: "setDurations"; durations: Partial<TimerDurations> }
+    | { type: "setCharacter"; characterIndex: number }
+    | { type: "skip" }
     | { type: "start" }
     | { type: "tick" }
     | { type: "toggle" };
@@ -30,6 +46,8 @@ type TimerContextValue = TimerState & {
     pause: () => void;
     reset: () => void;
     setDurations: (durations: Partial<TimerDurations>) => void;
+    setCharacter: (characterIndex: number) => void;
+    skip: () => void;
     start: () => void;
     toggle: () => void;
 };
@@ -37,6 +55,7 @@ type TimerContextValue = TimerState & {
 const TimerContext = createContext<TimerContextValue | null>(null);
 
 const initialState: TimerState = {
+    characterIndex: 0,
     completedFocusSessions: 0,
     durations: DEFAULT_DURATIONS,
     isRunning: false,
@@ -87,6 +106,10 @@ function timerReducer(state: TimerState, action: TimerAction): TimerState {
                 remainingSeconds: durations[state.phase],
             };
         }
+        case "setCharacter":
+            return { ...state, characterIndex: action.characterIndex };
+        case "skip":
+            return nextPhase(state);
         case "tick":
             if (!state.isRunning) {
                 return state;
@@ -118,6 +141,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         pause: () => dispatch({ type: "pause" }),
         reset: () => dispatch({ type: "reset" }),
         setDurations: (durations) => dispatch({ type: "setDurations", durations }),
+        setCharacter: (characterIndex) => dispatch({ type: "setCharacter", characterIndex }),
+        skip: () => dispatch({ type: "skip" }),
         start: () => dispatch({ type: "start" }),
         toggle: () => dispatch({ type: "toggle" }),
     };
